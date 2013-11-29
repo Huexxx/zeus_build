@@ -803,6 +803,7 @@ BUILT_SYSTEMIMAGE := $(systemimage_intermediates)/system.img
 
 # $(1): output file
 define build-systemimage-target
+  $(hide) setool --policy $(ANDROID_BUILD_TOP)/$(TARGET_OUT)/etc/security/mac_permissions.xml $(ANDROID_BUILD_TOP)/$(TARGET_OUT)/app/*apk
   @echo "Target system fs image: $(1)"
   @mkdir -p $(dir $(1)) $(systemimage_intermediates) && rm -rf $(systemimage_intermediates)/system_image_info.txt
   $(call generate-userimage-prop-dictionary, $(systemimage_intermediates)/system_image_info.txt, skip_fsck=true)
@@ -811,7 +812,7 @@ define build-systemimage-target
       $(TARGET_OUT) $(systemimage_intermediates)/system_image_info.txt $(1)
 endef
 
-$(BUILT_SYSTEMIMAGE): $(FULL_SYSTEMIMAGE_DEPS) $(INSTALLED_FILES_FILE)
+$(BUILT_SYSTEMIMAGE): $(FULL_SYSTEMIMAGE_DEPS) $(INSTALLED_FILES_FILE) setool
 	$(call build-systemimage-target,$@)
 
 INSTALLED_SYSTEMIMAGE := $(PRODUCT_OUT)/system.img
@@ -843,7 +844,7 @@ $(INSTALLED_SYSTEMIMAGE): $(BUILT_SYSTEMIMAGE) $(RECOVERY_FROM_BOOT_PATCH) | $(A
 systemimage: $(INSTALLED_SYSTEMIMAGE)
 
 .PHONY: systemimage-nodeps snod
-systemimage-nodeps snod: $(filter-out systemimage-nodeps snod,$(MAKECMDGOALS)) \
+systemimage-nodeps snod: setool $(filter-out systemimage-nodeps snod,$(MAKECMDGOALS)) \
 	            | $(INTERNAL_USERIMAGES_DEPS)
 	@echo "make $@: ignoring dependencies"
 	$(call build-systemimage-target,$(INSTALLED_SYSTEMIMAGE))

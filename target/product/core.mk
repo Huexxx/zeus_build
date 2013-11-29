@@ -30,6 +30,7 @@ PRODUCT_PACKAGES += \
     PacProcessor \
     ProxyHandler \
     SharedStorageBackup \
-    VpnDialogs
+    VpnDialogs \
+    SEAdmin
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_base.mk)

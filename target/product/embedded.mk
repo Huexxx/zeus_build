@@ -73,8 +73,10 @@ PRODUCT_PACKAGES += \
     file_contexts \
     seapp_contexts \
     property_contexts \
-    mac_permissions.xml
-
+    mac_permissions.xml \
+    eops.xml \
+    auditd \
+    selinux-network.sh
 
 PRODUCT_COPY_FILES += \
     system/core/rootdir/init.usb.rc:root/init.usb.rc \
