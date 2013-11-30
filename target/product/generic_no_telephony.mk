@@ -24,12 +24,10 @@ PRODUCT_PACKAGES := \
     Bluetooth \
     Calculator \
     Calendar \
-    Camera2 \
     CertInstaller \
     Email \
     Exchange2 \
     FusedLocation \
-    Gallery2 \
     InputDevices \
     Keyguard \
     LatinIME \
