@@ -23,7 +23,6 @@ PRODUCT_PACKAGES := \
     DeskClock \
     Bluetooth \
     Calculator \
-    Calendar \
     CertInstaller \
     Email \
     Exchange2 \
@@ -41,7 +40,6 @@ PRODUCT_PACKAGES := \
     Settings \
     SystemUI \
     TeleService \
-    CalendarProvider \
     bluetooth-health \
     hostapd \
     wpa_supplicant.conf \

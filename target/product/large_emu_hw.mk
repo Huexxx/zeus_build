@@ -24,7 +24,6 @@ PRODUCT_PACKAGES := \
     DeskClock \
     Bluetooth \
     Calculator \
-    Calendar \
     CertInstaller \
     Email \
     Exchange2 \
@@ -37,7 +36,6 @@ PRODUCT_PACKAGES := \
     Settings \
     Sync \
     Updater \
-    CalendarProvider \
     SyncProvider \
     bluetooth-health \
     hostapd \

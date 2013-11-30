@@ -52,8 +52,6 @@ PRODUCT_PACKAGES := \
 	librs_jni \
 	ConnectivityTest \
 	GpsLocationTest \
-	CalendarProvider \
-	Calendar \
 	SmokeTest \
 	SmokeTestApp \
 	rild \
