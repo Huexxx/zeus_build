@@ -26,7 +26,6 @@ PRODUCT_PACKAGES := \
 	Gallery \
 	Keyguard \
 	Music \
-	Mms \
 	PrintSpooler \
 	TeleService \
 	Protips \
