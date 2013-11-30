@@ -33,7 +33,6 @@ PRODUCT_PACKAGES := \
     Launcher2 \
     Music \
     MusicFX \
-    OneTimeInitializer \
     PrintSpooler \
     Provision \
     Settings \
