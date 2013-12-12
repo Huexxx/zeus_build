@@ -23,7 +23,6 @@ PRODUCT_PACKAGES := \
 	Email \
 	Exchange2 \
 	FusedLocation \
-	Gallery \
 	Keyguard \
 	Music \
 	PrintSpooler \
@@ -39,7 +38,6 @@ PRODUCT_PACKAGES := \
 	CustomLocale \
 	sqlite3 \
 	InputDevices \
-	LatinIME \
 	CertInstaller \
 	LiveWallpapersPicker \
 	ApiDemos \
