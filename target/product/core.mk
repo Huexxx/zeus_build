@@ -20,7 +20,6 @@
 # core_minimal.mk instead.
 
 PRODUCT_PACKAGES += \
-    BasicDreams \
     Contacts \
     DocumentsUI \
     DownloadProviderUi \

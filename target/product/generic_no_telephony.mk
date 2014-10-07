@@ -29,10 +29,7 @@ PRODUCT_PACKAGES := \
     FusedLocation \
     InputDevices \
     Keyguard \
-    Music \
-    MusicFX \
     PrintSpooler \
-    Provision \
     Settings \
     SystemUI \
     TeleService \
