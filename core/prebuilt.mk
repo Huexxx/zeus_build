@@ -16,6 +16,14 @@ ifneq ($(LOCAL_PREBUILT_JAVA_LIBRARIES),)
 $(error dont use LOCAL_PREBUILT_JAVA_LIBRARIES anymore LOCAL_PATH=$(LOCAL_PATH))
 endif
 
+ifneq ($(filter $(LOCAL_MODULE_TAGS),force_dex_preopt),)
+  ifeq (true,$(WITH_DEXPREOPT))
+    ifndef LOCAL_DEX_PREOPT
+      LOCAL_DEX_PREOPT := true
+    endif
+  endif
+endif
+
 # Not much sense to check build prebuilts
 LOCAL_DONT_CHECK_MODULE := true
 
@@ -144,6 +152,11 @@ else
   $(built_module) : PRIVATE_CERTIFICATE := $(LOCAL_CERTIFICATE).x509.pem
 endif
 
+ifneq ($(filter $(LOCAL_MODULE_TAGS),force_dex_preopt),)
+# Make sure the boot jars get dexpreopt-ed first
+$(built_module) : $(DEXPREOPT_BOOT_ODEXS) | $(DEXPREOPT) $(DEXOPT) $(AAPT)
+endif
+
 ifneq ($(filter APPS,$(LOCAL_MODULE_CLASS)),)
 ifeq ($(LOCAL_CERTIFICATE),PRESIGNED)
 # Ensure that presigned .apks have been aligned.
@@ -156,6 +169,16 @@ $(built_module) : $(my_prebuilt_src_file) | $(ACP) $(ZIPALIGN) $(SIGNAPK_JAR)
 	$(sign-package)
 	$(align-package)
 endif
+ifneq ($(filter $(LOCAL_MODULE_TAGS),force_dex_preopt),)
+	$(hide) rm -f $(patsubst %.apk,%.odex,$@)
+	$(call dexpreopt-one-file,$@,$(patsubst %.apk,%.odex,$@))
+ifneq ($(DEX_PREOPT_DEFAULT),nostripping)
+	$(call dexpreopt-remove-classes.dex,$@)
+endif
+
+built_odex := $(basename $(built_module)).odex
+$(built_odex): $(built_module)
+endif
 else
 ifneq ($(LOCAL_PREBUILT_STRIP_COMMENTS),)
 $(built_module) : $(my_prebuilt_src_file)
@@ -163,6 +186,16 @@ $(built_module) : $(my_prebuilt_src_file)
 else
 $(built_module) : $(my_prebuilt_src_file) | $(ACP)
 	$(transform-prebuilt-to-target)
+ifneq ($(filter $(LOCAL_MODULE_TAGS),force_dex_preopt),)
+	$(hide) rm -f $(patsubst %.jar,%.odex,$@)
+	$(call dexpreopt-one-file,$@,$(patsubst %.jar,%.odex,$@))
+ifneq ($(DEX_PREOPT_DEFAULT),nostripping)
+	$(call dexpreopt-remove-classes.dex,$@)
+endif
+
+built_odex := $(basename $(built_module)).odex
+$(built_odex): $(built_module)
+endif
 ifneq ($(prebuilt_module_is_a_library),)
   ifneq ($(LOCAL_IS_HOST_MODULE),)
 	$(transform-host-ranlib-copy-hack)
@@ -190,3 +223,4 @@ $(common_javalib_jar) : $(common_classes_jar) | $(ACP)
 # make sure the classes.jar and javalib.jar are built before $(LOCAL_BUILT_MODULE)
 $(built_module) : $(common_javalib_jar)
 endif # TARGET JAVA_LIBRARIES
+
