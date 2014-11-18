@@ -18,45 +18,53 @@
 PRODUCT_PACKAGES += \
     20-dns.conf \
     95-configured \
+    appwidget \
+    appops \
     am \
     android.policy \
     android.test.runner \
     app_process \
     applypatch \
+    blkid \
     bmgr \
     bugreport \
     content \
     dhcpcd \
     dhcpcd-run-hooks \
     dnsmasq \
+    dpm \
     framework \
     fsck_msdos \
     ime \
+    input \
     javax.obex \
-    libSR_AudioIn \
     libandroid \
     libandroid_runtime \
     libandroid_servers \
     libaudioeffect_jni \
     libaudioflinger \
+    libaudiopolicyservice \
+    libaudiopolicymanager \
     libbundlewrapper \
     libcamera_client \
     libcameraservice \
     libdl \
+    libdrmclearkeyplugin \
     libeffectproxy \
     libeffects \
     libinput \
+    libinputflinger \
     libiprouteutil \
-    libjni_latinime \
     libjnigraphics \
     libldnhncr \
     libmedia \
     libmedia_jni \
     libmediaplayerservice \
     libmtp \
+    libnetd_client \
     libnetlink \
     libnetutils \
-    libpac \
+    libpdfium \
     libreference-ril \
     libreverbwrapper \
     libril \
@@ -65,6 +73,8 @@ PRODUCT_PACKAGES += \
     libskia \
     libsonivox \
     libsoundpool \
+    libsoundtrigger \
+    libsoundtriggerservice \
     libsqlite \
     libstagefright \
     libstagefright_amrnb_common \
@@ -77,7 +87,8 @@ PRODUCT_PACKAGES += \
     libutils \
     libvisualizer \
     libvorbisidec \
-    libwpa_client \
+    libmediandk \
+    libwifi-service \
     media \
     media_cmd \
     mediaserver \
@@ -94,7 +105,6 @@ PRODUCT_PACKAGES += \
     racoon \
     run-as \
     schedtest \
-    screenshot \
     sdcard \
     services \
     settings \
@@ -102,7 +112,6 @@ PRODUCT_PACKAGES += \
     tc \
     vdc \
     vold \
-    webview \
     wm
 
 
