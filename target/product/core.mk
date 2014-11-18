@@ -21,7 +21,6 @@
 
 PRODUCT_PACKAGES += \
     BasicDreams \
-    Browser \
     Calculator \
     CaptivePortalLogin \
     CertInstaller \
