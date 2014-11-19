@@ -29,11 +29,7 @@ PRODUCT_PACKAGES := \
 	GestureBuilder \
 	LegacyCamera \
 	librs_jni \
-	libwnndict \
-	libWnnEngDic \
-	libWnnJpnDic \
 	LiveWallpapersPicker \
-	OpenWnn \
 	Protips \
 	rild \
 	SdkSetup \
