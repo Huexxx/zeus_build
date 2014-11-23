@@ -111,6 +111,11 @@ endif
 
 endif  # LOCAL_STRIP_MODULE not true
 
+# Disable dex-preopt of prebuilts to save space, if requested.
+ifeq ($(DONT_DEXPREOPT_PREBUILTS),true)
+LOCAL_DEX_PREOPT := false
+endif
+
 ifeq ($(LOCAL_MODULE_CLASS),APPS)
 PACKAGES.$(LOCAL_MODULE).OVERRIDES := $(strip $(LOCAL_OVERRIDES_PACKAGES))
 
@@ -155,11 +160,6 @@ else
 
   $(built_module) : PRIVATE_PRIVATE_KEY := $(LOCAL_CERTIFICATE).pk8
   $(built_module) : PRIVATE_CERTIFICATE := $(LOCAL_CERTIFICATE).x509.pem
-endif
-
-# Disable dex-preopt of prebuilts to save space, if requested.
-ifeq ($(DONT_DEXPREOPT_PREBUILTS),true)
-LOCAL_DEX_PREOPT := false
 endif
 
 #######################################
@@ -226,12 +226,24 @@ $(my_register_name): $(installed_apk_splits)
 endif # LOCAL_PACKAGE_SPLITS
 
 else # LOCAL_MODULE_CLASS != APPS
+
+# Huexxx: dexpreopt target JAVA_LIBRARIES too
+ifeq ($(LOCAL_IS_HOST_MODULE),)
+ifeq ($(LOCAL_MODULE_CLASS),JAVA_LIBRARIES)
+#######################################
+# defines built_odex along with rule to install odex
+include $(BUILD_SYSTEM)/dex_preopt_odex_install.mk
+#######################################
+endif
+endif
+
 ifneq ($(LOCAL_PREBUILT_STRIP_COMMENTS),)
 $(built_module) : $(my_prebuilt_src_file)
 	$(transform-prebuilt-to-target-strip-comments)
 else
 $(built_module) : $(my_prebuilt_src_file) | $(ACP)
 	$(transform-prebuilt-to-target)
+
 ifneq ($(prebuilt_module_is_a_library),)
   ifneq ($(LOCAL_IS_HOST_MODULE),)
 	$(transform-host-ranlib-copy-hack)
@@ -241,6 +253,21 @@ ifneq ($(prebuilt_module_is_a_library),)
 endif
 endif
 endif # LOCAL_MODULE_CLASS != APPS
+
+# Huexxx: dexpreopt target JAVA_LIBRARIES too
+ifeq ($(LOCAL_IS_HOST_MODULE),)
+ifeq ($(LOCAL_MODULE_CLASS),JAVA_LIBRARIES)
+ifdef LOCAL_DEX_PREOPT
+ifneq (nostripping,$(LOCAL_DEX_PREOPT))
+	$(call dexpreopt-remove-classes.dex,$@)
+	$(align-package)
+endif
+
+$(built_odex) : $(my_prebuilt_src_file)
+	$(call dexpreopt-one-file,$<,$@)
+endif
+endif
+endif
 
 ifeq ($(LOCAL_IS_HOST_MODULE)$(LOCAL_MODULE_CLASS),JAVA_LIBRARIES)
 # for target java libraries, the LOCAL_BUILT_MODULE is in a product-specific dir,
