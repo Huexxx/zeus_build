@@ -22,7 +22,6 @@ PRODUCT_PACKAGES := \
 	CustomLocale \
 	Development \
 	DevelopmentSettings \
-	Dialer \
 	EmulatorSmokeTests \
 	Fallback \
 	Gallery \

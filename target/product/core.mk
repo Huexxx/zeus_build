@@ -41,7 +41,6 @@ PRODUCT_PACKAGES += \
     Settings \
     SharedStorageBackup \
     Telecom \
-    TeleService \
     VpnDialogs \
     MmsService
 
